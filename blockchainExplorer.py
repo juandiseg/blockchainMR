@@ -2,59 +2,71 @@ from Blockchain import Blockchain
 from data.dataFormats import *
 from data.dataTypeCodes import dataTypeCodes
 
+class refinedSearch:  
+    def __init__(self, surgery:bool=True,userHasAccess:bool=True,injury:bool=True,incident:bool=True,drug:bool=True, appointment:bool=True,allergy:bool=True):
+        self.surgery = surgery
+        self.userHasAccess = userHasAccess
+        self.injury = injury
+        self.incident = incident
+        self.drug = drug
+        self.appointment = appointment
+        self.allergy = allergy
+
+    def allTrue(self):
+        return self.surgery and self.userHasAccess and self.injury and self.incident and self.drug and self.appointment and self.allergy
+
 class blockchainExplorer:
     def __init__(self):
         self.DATA_CODES = dataTypeCodes()
         self.blockchain = Blockchain()
 
-    def addSurgery(self, userID:int, hospitalID:int, surgeonTeamIDs, surgeryName:str, description:str, notes:str, date:str):
-        self.blockchain.addBlock(userID, self.DATA_CODES.surgery, surgery(userID, hospitalID, surgeonTeamIDs, surgeryName, description, notes, date))
+    def addSurgery(self, data:surgery):
+        self.blockchain.addBlock(data.userID, self.DATA_CODES.surgery, data)
 
-    def addUserHasAccess(self, userID:int, userGrantedAccessID:int, date:str):
-        self.blockchain.addBlock(userID, self.DATA_CODES.userHasAccess, userHasAccess(userID, userGrantedAccessID, date))
+    def addUserHasAccess(self, data:userHasAccess):
+        self.blockchain.addBlock(data.userID, self.DATA_CODES.userHasAccess, data)
 
-    def addInjury(self, userID:int, injuryID:int, medicalTeamIDs, injuryTitle:str, description:str, date:str, notes:str=""):
-        self.blockchain.addBlock(userID, self.DATA_CODES.injury, injury(userID, injuryID, medicalTeamIDs, injuryTitle, description, date, notes))
+    def addInjury(self, data:injury):
+        self.blockchain.addBlock(data.userID, self.DATA_CODES.injury, data)
 
-    def addIncident(self, userID:int, medicalTeamIDs, incidentTitle:str, description:str, date:str, notes:str=""):
-        self.blockchain.addBlock(userID, self.DATA_CODES.incident, incident(userID, medicalTeamIDs, incidentTitle, description, date, notes))
+    def addIncident(self, data:incident):
+        self.blockchain.addBlock(data.userID, self.DATA_CODES.incident, data)
 
-    def addDrug(self, userID:int, doctorID:int, drugTitle:str, startDate:str, endDate:str, reason:str, notes:str=""):
-        self.blockchain.addBlock(userID, self.DATA_CODES.drug, drug(userID, doctorID, drugTitle, startDate, endDate, reason, notes))
+    def addDrug(self, data:drug):
+        self.blockchain.addBlock(data.userID, self.DATA_CODES.drug, data)
     
-    def addAppointment(self, userID:int, doctorID:int, medicalCenter:int, reason:str, date:str, time:str):
-        self.blockchain.addBlock(userID, self.DATA_CODES.appointment, appointment(userID, doctorID, medicalCenter, reason, date, time))
+    def addAppointment(self, data:appointment):
+        self.blockchain.addBlock(data.userID, self.DATA_CODES.appointment, data)
     
-    def addAllergy(self, userID:int, allergyTitle:str, dateOfDiscovery:str, treatment:str, notes:str=""):
-        self.blockchain.addBlock(userID, self.DATA_CODES.allergy, allergy(userID, allergyTitle, dateOfDiscovery, treatment, notes))
+    def addAllergy(self, data:allergy):
+        self.blockchain.addBlock(data.userID, self.DATA_CODES.allergy, data)
 
     def searchUserID(self, userID:int):
         listData = []
         for block in self.blockchain.chain:
             if block.userID == userID:
-                listData.append(block)                
+                listData.append(block)    
         return listData
     
-    def searchHistory(self, userID:int,surgery:bool=True,userHasAccess:bool=True,injury:bool=True,incident:bool=True,drug:bool=True, appointment:bool=True,allergy:bool=True):
+    def searchHistory(self, userID:int, details:refinedSearch):
         blocks = self.searchUserID(userID)
         refinedEntries = []
-        if surgery and userHasAccess and injury and incident and drug and appointment and allergy:
-            for block in blocks:
-                refinedEntries.append(block.data)
-            return refinedEntries 
+        if details.allTrue():
+            return blocks 
+        
         for block in blocks:
-            if surgery == True and block.dataType == self.DATA_CODES.surgery:
-                refinedEntries.append(block.data)
-            if userHasAccess and block.dataType == self.DATA_CODES.userHasAccess:
-                refinedEntries.append(block.data)
-            if injury and block.dataType == self.DATA_CODES.injury:
-                refinedEntries.append(block.data)
-            if incident and block.dataType == self.DATA_CODES.incident:
-                refinedEntries.append(block.data)
-            if drug and block.dataType == self.DATA_CODES.drug:
-                refinedEntries.append(block.data)
-            if appointment and block.dataType == self.DATA_CODES.appointment:
-                refinedEntries.append(block.data)
-            if allergy and block.dataType == self.DATA_CODES.allergy:
-                refinedEntries.append(block.data)
+            if details.surgery and block.dataType == self.DATA_CODES.surgery:
+                refinedEntries.append(block)
+            if details.userHasAccess and block.dataType == self.DATA_CODES.userHasAccess:
+                refinedEntries.append(block)
+            if details.injury and block.dataType == self.DATA_CODES.injury:
+                refinedEntries.append(block)
+            if details.incident and block.dataType == self.DATA_CODES.incident:
+                refinedEntries.append(block)
+            if details.drug and block.dataType == self.DATA_CODES.drug:
+                refinedEntries.append(block)
+            if details.appointment and block.dataType == self.DATA_CODES.appointment:
+                refinedEntries.append(block)
+            if details.allergy and block.dataType == self.DATA_CODES.allergy:
+                refinedEntries.append(block)
         return refinedEntries

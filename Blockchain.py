@@ -11,7 +11,7 @@ class Blockchain:
     def getLatestBlock(self):
         return self.chain[len(self.chain)-1]
     
-    def addBlock(self, userID:int, dataCode:int, data:jsonConverter):
+    def addBlock(self, userID:int, dataCode:int, data:medicalEntry):
         blockID = self.getLatestBlock().blockID + 1
         timestamp = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         newBlock = Block(blockID, userID, dataCode, data, timestamp, self.getLatestBlock().hash)

@@ -1,0 +1,82 @@
+GET DATA REQUEST:
+{ 
+    "surgery" : true,
+    "userHasAccess": true,
+    "injury" : true,
+    "incident" : true,
+    "drug" : true,
+    "appointment" : true,
+    "allergy" : true
+}
+
+POST REQUESTS:
+
+| THOSE FIELDS THAT DON'T REQUIRE TO BE FILLED (e.g.: Notes), CAN BE COMPLETLY REMOVED FROM THE JSON obj |
+
+- SURGERY:
+{ 
+    "userID" : 1,
+    "surgeryName": "TEST SURGERY INSERTION",
+    "hospitalID" : 1,
+    "surgeonTeamIDs" : [1, 2, 3],
+    "description" : "A TEST SURGERY DESCRIPTION",
+    "date" : "31/10/2023",
+    "notes" : "NOTEEES"     # THIS IS OPTIONAL
+}
+
+- ALLERGY:
+{ 
+    "userID" : 1,
+    "allergy": "TEST ALLERGY",
+    "dateOfDiscovery" : "31/10/2023",
+    "treatment" : "A TEST SURGERY DESCRIPTION",
+    "notes" : "NOTEEES"     # THIS IS OPTIONAL
+}
+
+- APPOINTMENT:
+{ 
+    "userID" : 1,
+    "doctorID": 12,
+    "medicalCenter" : 12,
+    "reason" : "A TEST APPOINTMENT",
+    "date" : "31/10/2023",
+    "time" : "19:08"
+}
+
+- DRUG:
+{ 
+    "userID" : 1,
+    "doctorID": 12,
+    "drug" : "TEST DRUG",
+    "startDate" : "31/10/2023",
+    "endDate" : "01/11/2023",
+    "reason" : "TEST REASON",
+    "notes" : "TEST NOTES"  # THIS IS OPTIONAL
+}
+
+- INCIDENT:
+{ 
+    "userID" : 1,
+    "medicalTeamIDs": [1, 2, 3],
+    "incident" : "TEST INCIDENT",
+    "description" : "TEST DESCRIPTION",
+    "date" : "31/10/2023",
+    "notes" : "TEST NOTES"  # THIS IS OPTIONAL
+}
+
+- USER ACCESS:
+{ 
+    "userID" : 1,
+    "userGrantedAccessID": 12,
+    "date" : "31/10/2023"
+}
+
+- INJURY:
+{ 
+    "userID" : 1,
+    "medicalTeamIDs": [1, 2, 3],
+    "injury" : "TEST INJURY",
+    "description" : "TEST DESCRIPTION",
+    "date" : "31/10/2023",
+    "notes" : "TEST NOTES"  # THIS IS OPTIONAL
+}

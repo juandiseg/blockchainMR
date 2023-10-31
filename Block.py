@@ -1,10 +1,10 @@
 from hashlib import sha256
 
-from data.dataFormats import jsonConverter
+from data.dataFormats import medicalEntry
 
 class Block:
     
-    def __init__(self, blockID:int, userID:int, dataType:int, data:jsonConverter, timestamp:str, previousHash:str="0", nonce:int=0):
+    def __init__(self, blockID:int, userID:int, dataType:int, data:medicalEntry, timestamp:str, previousHash:str="0", nonce:int=0):
         self.blockID = blockID
         self.userID = userID
         self.timestamp = timestamp
