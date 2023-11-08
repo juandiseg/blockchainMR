@@ -12,14 +12,14 @@ blockExplorer = blockchainExplorer()
 
 @app.route('/data/<userID>', methods=['GET'])
 def getUserInfo(userID):
-    if request.method == 'GET':
-        searchDetails = refinedSearch(**request.get_json(silent=False))
-        transferable = []
-        for block in blockExplorer.searchHistory(int(userID), searchDetails):
-            transferable.append(transferableJSON(block))
-        return jsonpickle.encode(transferable, unpicklable=False)
-    
-    return 'Hello, World!'
+    searchDetails = refinedSearch(**request.get_json(silent=False))
+    transferable = []
+    for block in blockExplorer.searchHistory(int(userID), searchDetails):
+        transferable.append(transferableJSON(block))
+
+    #for block in blockExplorer.searchFull(int(userID)):
+    #    transferable.append(transferableJSON(block))        
+    return jsonpickle.encode(transferable, unpicklable=False)
 
 @app.route('/data/injury', methods=['POST'])
 def addInjury():
@@ -62,6 +62,11 @@ def addDrug():
     data = drug(**request.get_json(silent=False))
     blockExplorer.addDrug(data)
     return "Successfully added!"
+
+@app.route("/data/populate", methods=['GET'])
+def populateBlockchain():
+    blockExplorer.populateBlockchain()
+    return "DONE"
 
 class transferableJSON():
     def __init__(self, block:Block):

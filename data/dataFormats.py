@@ -1,8 +1,6 @@
-import json
-
 class medicalEntry:
-    def convertJSON(self):
-        return json.dumps(self.__dict__)
+    def __init__(self):
+        pass
     
 class genesisBlock(medicalEntry):
     def __init__(self):

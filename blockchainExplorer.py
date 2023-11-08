@@ -20,6 +20,15 @@ class blockchainExplorer:
         self.DATA_CODES = dataTypeCodes()
         self.blockchain = Blockchain()
 
+    def populateBlockchain(self):
+        self.blockchain.addBlock(1, self.DATA_CODES.surgery, surgery(1, 1, [1,2,3], "TEST NAME SURGERY", "TEST DESCRIPTION SURGERY", "29/10/2023"))
+        self.blockchain.addBlock(1, self.DATA_CODES.userHasAccess, userHasAccess(1,12, "29/10/2023"))
+        self.blockchain.addBlock(1, self.DATA_CODES.injury, injury(1, [1,2,3], "TEST NAME INJURY", "TEST DESCRIPTION INJURY", "29/10/2023", "TEST INJURY NOTES"))
+        self.blockchain.addBlock(1, self.DATA_CODES.incident, incident(1, [1,2,3], "TEST NAME INCIDENT", "TEST DESCRIPTION INCIDENT", "30/10/2023", "TEST INCIDENT NOTES"))
+        self.blockchain.addBlock(1, self.DATA_CODES.drug, drug(1, 12, "TEST NAME DRUG", "30/10/2023", "05/11/2023", "TEST DRUG REASON", "TEST DRUG NOTES"))
+        self.blockchain.addBlock(1, self.DATA_CODES.appointment, appointment(1, 4, 12, "TEST APPOINTMENT REASON", "06/11/2023", "TEST APPOINTMENT TIME"))
+        self.blockchain.addBlock(1, self.DATA_CODES.allergy, allergy(1, "TEST NAME ALLERGY", "06/11/2023", "TEST ALLERGY DESCRIPTION"))
+
     def addSurgery(self, data:surgery):
         self.blockchain.addBlock(data.userID, self.DATA_CODES.surgery, data)
 
@@ -70,3 +79,4 @@ class blockchainExplorer:
             if details.allergy and block.dataType == self.DATA_CODES.allergy:
                 refinedEntries.append(block)
         return refinedEntries
+    

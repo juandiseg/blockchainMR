@@ -31,5 +31,5 @@ class Block:
         return self.hash
 
     def calculateHash(self):
-        self.hash = sha256((str(self.blockID) + str(self.userID) + str(self.dataType) + str(self.timestamp) + self.data.convertJSON() + str(self.previousHash) + str(self.nonce)).encode('utf-8')).hexdigest()
+        self.hash = sha256((str(self.blockID) + str(self.userID) + str(self.dataType) + str(self.timestamp) + str(self.previousHash) + str(self.nonce)).encode('utf-8')).hexdigest()
         return self.hash
