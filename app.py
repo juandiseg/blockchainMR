@@ -3,13 +3,11 @@ from Block import Block
 from data.dataFormats import *
 from data.dataTypeCodes import dataTypeCodes
 from flask import Flask, request
-from flask_cors import CORS
 import json
 
 import jsonpickle
 
 app = Flask(__name__)
-CORS(app)
 blockExplorer = blockchainExplorer()
 
 @app.route('/data/<userID>', methods=['GET'])
