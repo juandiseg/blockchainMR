@@ -21,10 +21,10 @@ def getUserInfo(userID):
     #    transferable.append(transferableJSON(block))        
     return jsonpickle.encode(transferable, unpicklable=False)
 
-@app.route('/data/injury', methods=['POST'])
-def addInjury():
-    data = injury(**request.get_json(silent=False))
-    blockExplorer.addInjury(data)
+@app.route('/data/surgery', methods=['POST'])
+def addSurgery():
+    data = surgery(**request.get_json(silent=False))
+    blockExplorer.addSurgery(data)
     return "Successfully added!"
 
 @app.route('/data/userAccess', methods=['POST'])
@@ -33,22 +33,22 @@ def addUserAccess():
     blockExplorer.addUserHasAccess(data)
     return "Successfully added!"
 
+@app.route('/data/injury', methods=['POST'])
+def addInjury():
+    data = injury(**request.get_json(silent=False))
+    blockExplorer.addInjury(data)
+    return "Successfully added!"
+
 @app.route('/data/incident', methods=['POST'])
 def addIncident():
     data = incident(**request.get_json(silent=False))
     blockExplorer.addIncident(data)
     return "Successfully added!"
 
-@app.route('/data/surgery', methods=['POST'])
-def addSurgery():
-    data = surgery(**request.get_json(silent=False))
-    blockExplorer.addSurgery(data)
-    return "Successfully added!"
-
-@app.route('/data/allergy', methods=['POST'])
-def addAllergy():
-    data = allergy(**request.get_json(silent=False))
-    blockExplorer.addAllergy(data)
+@app.route('/data/drug', methods=['POST'])
+def addDrug():
+    data = drug(**request.get_json(silent=False))
+    blockExplorer.addDrug(data)
     return "Successfully added!"
 
 @app.route('/data/appointment', methods=['POST'])
@@ -57,10 +57,10 @@ def addAppointment():
     blockExplorer.addAppointment(data)
     return "Successfully added!"
 
-@app.route('/data/drug', methods=['POST'])
-def addDrug():
-    data = drug(**request.get_json(silent=False))
-    blockExplorer.addDrug(data)
+@app.route('/data/allergy', methods=['POST'])
+def addAllergy():
+    data = allergy(**request.get_json(silent=False))
+    blockExplorer.addAllergy(data)
     return "Successfully added!"
 
 @app.route("/data/populate", methods=['GET'])
