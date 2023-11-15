@@ -14,7 +14,17 @@ class Blockchain:
     def addBlock(self, userID:int, dataCode:int, data:medicalEntry):
         blockID = self.getLatestBlock().blockID + 1
         timestamp = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        newBlock = Block(blockID, userID, dataCode, data, timestamp, self.getLatestBlock().hash)
+        if isinstance(data, userHasAccess) or isinstance(data, appointment):
+            if isinstance(data, userHasAccess):
+                print("here")
+                data.__class__ = userHasAccess
+                newBlock = Block(blockID, userID, dataCode, data, timestamp, doctorID=data.userGrantedAccessID, previousHash=self.getLatestBlock().hash)
+            if isinstance(data, appointment):
+                print("or here")
+                data.__class__ = appointment
+                newBlock = Block(blockID, userID, dataCode, data, timestamp, doctorID=data.doctorID, previousHash=self.getLatestBlock().hash)
+        else:
+            newBlock = Block(blockID, userID, dataCode, data, timestamp, previousHash=self.getLatestBlock().hash)
         newBlock.mineBlock(self.difficulty)
         self.chain.append(newBlock)
 

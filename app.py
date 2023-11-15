@@ -15,10 +15,21 @@ def getUserInfo(userID):
     searchDetails = refinedSearch(**request.get_json(silent=False))
     transferable = []
     for block in blockExplorer.searchHistory(int(userID), searchDetails):
-        transferable.append(transferableJSON(block))
+        transferable.append(transferableJSON(block))      
+    return jsonpickle.encode(transferable, unpicklable=False)
 
-    #for block in blockExplorer.searchFull(int(userID)):
-    #    transferable.append(transferableJSON(block))        
+@app.route('/data/appointment/<doctorID>', methods=['GET'])
+def getAppointmentsForDoctors(doctorID):
+    transferable = []
+    for block in blockExplorer.searchAppointmentsDoctor(int(doctorID)):
+        transferable.append(transferableJSON(block)) 
+    return jsonpickle.encode(transferable, unpicklable=False)
+
+@app.route('/data/access/<doctorID>', methods=['GET'])
+def getAccessGrantsForDoctor(doctorID):
+    transferable = []
+    for block in blockExplorer.searchAccessGrantsForDoctor(int(doctorID)):
+        transferable.append(transferableJSON(block)) 
     return jsonpickle.encode(transferable, unpicklable=False)
 
 @app.route('/data/surgery', methods=['POST'])

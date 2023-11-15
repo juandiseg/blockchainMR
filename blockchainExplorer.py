@@ -58,6 +58,20 @@ class blockchainExplorer:
                 listData.append(block)    
         return listData
     
+    def searchAppointmentsDoctor(self, doctorID:int):
+        listAppointments = []
+        for block in self.blockchain.chain:
+            if block.doctorID == doctorID and block.dataType == 6:
+                listAppointments.append(block)
+        return listAppointments
+    
+    def searchAccessGrantsForDoctor(self, doctorID:int):
+        listAccesss = []
+        for block in self.blockchain.chain:
+            if block.doctorID == doctorID and block.dataType == 2:
+                listAccesss.append(block)
+        return listAccesss
+
     def searchHistory(self, userID:int, details:refinedSearch):
         blocks = self.searchUserID(userID)
         refinedEntries = []
