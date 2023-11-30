@@ -1,14 +1,19 @@
+from SmartContractor import SmartContract
 from blockchainExplorer import blockchainExplorer, refinedSearch
 from Block import Block
+from clauseator import clause
+from data.comparisonTypeCodes import comparisonTypeCodes
 from data.dataFormats import *
 from data.dataTypeCodes import dataTypeCodes
 from flask import Flask, request
 import json
 
 import jsonpickle
+from util.smartContractGenerator import smartContractGenerator
 
 app = Flask(__name__)
 blockExplorer = blockchainExplorer()
+blockExplorer.addSmartContract(smartContractGenerator.generate())
 
 @app.route('/data/<userID>', methods=['GET'])
 def getUserInfo(userID):

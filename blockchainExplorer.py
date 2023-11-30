@@ -1,6 +1,9 @@
 from Blockchain import Blockchain
+from clauseator import clause
 from data.dataFormats import *
 from data.dataTypeCodes import dataTypeCodes
+from SmartContractor import SmartContract
+from smartContractListeners import smartContractListeners
 
 class refinedSearch:  
     def __init__(self, surgery:bool=True,userHasAccess:bool=True,injury:bool=True,incident:bool=True,drug:bool=True, appointment:bool=True,allergy:bool=True):
@@ -19,6 +22,7 @@ class blockchainExplorer:
     def __init__(self):
         self.DATA_CODES = dataTypeCodes()
         self.blockchain = Blockchain()
+        self.listeners = smartContractListeners()
 
     def populateBlockchain(self):
         userID = 100200310
@@ -32,29 +36,40 @@ class blockchainExplorer:
 
     def addSurgery(self, data:surgery):
         self.blockchain.addBlock(data.userID, self.DATA_CODES.surgery, data)
+        self.listeners.notifyListeners(self.DATA_CODES.surgery, data)
+
+    def addSmartContract(self, data:SmartContract):
+        self.blockchain.addBlock(-1, self.DATA_CODES.smartcontract, data)
+        self.listeners.addSmartContract(data)
 
     def addUserHasAccess(self, data:userHasAccess):
         self.blockchain.addBlock(data.userID, self.DATA_CODES.userHasAccess, data)
+        self.listeners.notifyListeners(self.DATA_CODES.userHasAccess, data)
 
     def addInjury(self, data:injury):
         self.blockchain.addBlock(data.userID, self.DATA_CODES.injury, data)
+        self.listeners.notifyListeners(self.DATA_CODES.injury, data)
 
     def addIncident(self, data:incident):
         self.blockchain.addBlock(data.userID, self.DATA_CODES.incident, data)
+        self.listeners.notifyListeners(self.DATA_CODES.incident, data)
 
     def addDrug(self, data:drug):
         self.blockchain.addBlock(data.userID, self.DATA_CODES.drug, data)
+        self.listeners.notifyListeners(self.DATA_CODES.drug, data)
     
     def addAppointment(self, data:appointment):
         self.blockchain.addBlock(data.userID, self.DATA_CODES.appointment, data)
+        self.listeners.notifyListeners(self.DATA_CODES.appointment, data)
     
     def addAllergy(self, data:allergy):
         self.blockchain.addBlock(data.userID, self.DATA_CODES.allergy, data)
+        self.listeners.notifyListeners(self.DATA_CODES.allergy, data)
 
     def searchUserID(self, userID:int):
         listData = []
         for block in self.blockchain.chain:
-            if block.userID == userID:
+            if block.userID == userID and block.dataType != 8:
                 listData.append(block)    
         return listData
     
@@ -94,4 +109,3 @@ class blockchainExplorer:
             if details.allergy and block.dataType == self.DATA_CODES.allergy:
                 refinedEntries.append(block)
         return refinedEntries
-    
