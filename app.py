@@ -25,7 +25,9 @@ def getUserInfo(userID):
 
 @app.route('/data/validate', methods=['GET'])
 def validateBlockchain():
-    return blockExplorer.isChainValid()
+    if blockExplorer.isChainValid() :
+        return "PASSED"
+    return "FAILED"
 
 @app.route('/data/appointment/<doctorID>', methods=['GET'])
 def getAppointmentsForDoctors(doctorID):

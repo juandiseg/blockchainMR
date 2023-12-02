@@ -12,15 +12,6 @@ class Block:
         self.previousHash = previousHash
         self.nonce = nonce
         self.hash = self.calculateHash()
-    
-    def print(self):
-        print(f"\tblockID : {self.blockID}")
-        print(f"\tuserID : {self.userID}")
-        print(f"\tdoctorID : {self.doctorID}")
-        print(f"\ttimestamp : {self.timestamp}")
-        print(f"\tdata_type : {self.dataType}")
-        print(f"\tpreviousHASH {self.previousHash}")
-        print(f"\thash : {self.hash}")
 
     def mineBlock(self, difficulty:int=2):
         self.nonce = 0

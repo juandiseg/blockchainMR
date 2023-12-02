@@ -24,8 +24,3 @@ class SmartContract():
     
     def run(self):
         self.runnable()
-
-    def printStatus(self):
-        for clause in self.clauses:
-            print(clause)
-        print(self.runnable)

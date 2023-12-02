@@ -16,11 +16,9 @@ class Blockchain:
         timestamp = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         if isinstance(data, userHasAccess) or isinstance(data, appointment):
             if isinstance(data, userHasAccess):
-                print("here")
                 data.__class__ = userHasAccess
                 newBlock = Block(blockID, userID, dataCode, data, timestamp, doctorID=data.userGrantedAccessID, previousHash=self.getLatestBlock().hash)
             if isinstance(data, appointment):
-                print("or here")
                 data.__class__ = appointment
                 newBlock = Block(blockID, userID, dataCode, data, timestamp, doctorID=data.doctorID, previousHash=self.getLatestBlock().hash)
         else:
@@ -37,14 +35,3 @@ class Blockchain:
             if currBlock.mineBlock(self.difficulty) != currBlock.hash:
                 return False
         return True
-
-    def print(self):
-        print("Blockchain summary: ")
-        for i in range(len(self.chain)):
-            print("{")
-            self.chain[i].print()
-            if i == len(self.chain)-1:
-                print("}")
-            else:
-                print("},")
-        print(f"Is the blockchain corrupted: {not self.isChainValid()}.")

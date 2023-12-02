@@ -76,14 +76,13 @@ class smartContractListeners:
             try:
                 attribute = getattr(event, clause.field)
                 if smartContractListeners.carryComparison(clause.comparison, attribute, clause.goalVal):
-                    print("Its in here")
                     clause.setConditionToMet()
                     clausesToBeErased.append(clause)
                     smartContract = clause.getSmartContract()
                     if(smartContract.allConditionsAreMet()):
                         smartContract.run()
             except AttributeError:
-                print("FIELD NOT FOUND!")
+                print("Err: Field not found. There is an error in one of the clauses.")
                 pass
         for clause in clausesToBeErased:
             list.remove(clause)
