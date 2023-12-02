@@ -24,6 +24,9 @@ class blockchainExplorer:
         self.blockchain = Blockchain()
         self.listeners = smartContractListeners()
 
+    def isChainValid(self):
+        return self.blockchain.isChainValid()
+
     def populateBlockchain(self):
         userID = 100200310
         self.blockchain.addBlock(userID, self.DATA_CODES.surgery, surgery(userID, 1, [1,2,3], "TEST NAME SURGERY", "TEST DESCRIPTION SURGERY", "29/10/2023"))

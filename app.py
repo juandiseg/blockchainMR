@@ -23,6 +23,10 @@ def getUserInfo(userID):
         transferable.append(transferableJSON(block))      
     return jsonpickle.encode(transferable, unpicklable=False)
 
+@app.route('/data/validate', methods=['GET'])
+def validateBlockchain():
+    return blockExplorer.isChainValid()
+
 @app.route('/data/appointment/<doctorID>', methods=['GET'])
 def getAppointmentsForDoctors(doctorID):
     transferable = []
